@@ -14,7 +14,10 @@ export function useObligations() {
         .select("*")
         .order("due_date", { ascending: true, nullsFirst: false });
       if (error) throw error;
-      return data ?? [];
+      // DB enum columns are TEXT+CHECK, so generated rows type them as `string`.
+      // The CHECK constraints guarantee values fall within the @atlas/core unions,
+      // making this boundary cast safe.
+      return (data ?? []) as Obligation[];
     },
   });
 }

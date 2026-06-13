@@ -36,6 +36,10 @@ apps/mobile/android/
 .env.*
 !.env.example
 
+# supabase (CLI link/runtime artifacts; keep migrations/ + config.toml)
+supabase/.temp/
+supabase/.branches/
+
 # misc / OS
 .DS_Store
 *.log
