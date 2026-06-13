@@ -19,7 +19,9 @@
     "android": "pnpm --filter @atlas/mobile android",
     "clean": "turbo run clean && rimraf node_modules"
   },
+  "//expoHoist": "expo is declared at the root (unused by root code) so pnpm hoists it to the workspace-root node_modules, where @expo/metro-config does require.resolve('expo/package.json'). As a single-consumer dep it otherwise stays in apps/mobile/node_modules and `expo start` fails with 'Cannot find module expo/package.json'. Keep the version in sync with apps/mobile. See .npmrc.",
   "devDependencies": {
+    "expo": "~56.0.0",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "turbo": "^2.5.0",
