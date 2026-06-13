@@ -1,0 +1,27 @@
+{
+  "name": "@atlas/config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "react-native": "./src/index.ts",
+  "files": [
+    "src",
+    "tokens.js",
+    "tokens.d.ts",
+    "tailwind-preset.js",
+    "eslint.config.mjs",
+    "tsconfig.base.json"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.9.0",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "globals": "^15.9.0",
+    "typescript-eslint": "^8.8.0"
+  }
+}

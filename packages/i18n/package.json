@@ -1,0 +1,19 @@
+{
+  "name": "@atlas/i18n",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "react-native": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "devDependencies": {
+    "@atlas/config": "workspace:*",
+    "@types/react": "^19.0.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@atlas/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"@atlas/web placeholder — no build yet\"",
+    "lint": "echo \"@atlas/web placeholder — no lint yet\"",
+    "typecheck": "echo \"@atlas/web placeholder — no typecheck yet\""
+  }
+}

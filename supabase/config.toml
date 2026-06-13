@@ -1,0 +1,31 @@
+# Minimal Supabase CLI config. Regenerate/expand with `supabase init` once the
+# CLI is installed and the project is linked. The schema is the source of truth
+# and lives in migrations/ (CLAUDE.md §11.2). No secrets here — the project ref,
+# anon key (client) and service_role key (edge functions only) live elsewhere.
+project_id = "atlas"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+# App deep-link scheme (matches apps/mobile/app.json "scheme").
+site_url = "atlas://"
+additional_redirect_urls = ["atlas://"]
+
+[storage]
+enabled = true
+# Scans bucket is created via migration (CLAUDE.md §6): {user_id}/{uuid}.jpg

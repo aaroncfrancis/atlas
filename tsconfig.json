@@ -1,0 +1,6 @@
+{
+  "//": "Root anchor for editors. Each workspace has its own tsconfig extending @atlas/config/tsconfig.base.json. Typechecking runs per-package via `turbo run typecheck`.",
+  "extends": "./packages/config/tsconfig.base.json",
+  "include": [],
+  "exclude": ["node_modules", "**/node_modules", "**/dist", "**/.expo"]
+}

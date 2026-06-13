@@ -1,0 +1,47 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# turbo
+.turbo/
+
+# typescript / build output
+dist/
+*.tsbuildinfo
+
+# test coverage
+coverage/
+
+# expo / react native
+.expo/
+.expo-shared/
+web-build/
+expo-env.d.ts
+
+# native build artifacts
+apps/mobile/ios/
+apps/mobile/android/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# metro
+.metro-health-check*
+
+# env (never commit real secrets — see .env.example)
+.env
+.env.*
+!.env.example
+
+# misc / OS
+.DS_Store
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.idea/
+.vscode/*
+!.vscode/extensions.json

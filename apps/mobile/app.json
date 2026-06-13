@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "Atlas",
+    "slug": "atlas",
+    "scheme": "atlas",
+    "version": "0.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#F7F8FA",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.atlas.app"
+    },
+    "android": {
+      "package": "com.atlas.app"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-splash-screen",
+      "expo-status-bar",
+      "expo-font"
+    ]
+  }
+}

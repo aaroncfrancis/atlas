@@ -1,0 +1,3 @@
+# Edge functions live here (CLAUDE.md §7, §11.4). Ingestion & AI parsing are
+# SERVER-SIDE ONLY — e.g. `scan` (image → ScanDraft), future email/bank ingest.
+# The LLM provider key lives ONLY in the edge-function env, never in the bundle.

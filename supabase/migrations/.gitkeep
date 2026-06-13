@@ -1,0 +1,2 @@
+# SQL migrations live here — the Supabase schema is the SOURCE OF TRUTH
+# (CLAUDE.md §11.2). Change the schema only via migrations; never edit a live DB.
