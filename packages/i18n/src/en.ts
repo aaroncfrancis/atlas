@@ -24,6 +24,23 @@ export const en = {
   "obligation.cancelSubscription": "Cancel subscription",
   "obligation.autoPaid": "Auto-paid",
 
+  "auth.signInTab": "Sign in",
+  "auth.signUpTab": "Sign up",
+  "auth.email": "Email",
+  "auth.password": "Password",
+  "auth.emailPlaceholder": "you@example.com",
+  "auth.passwordPlaceholder": "••••••••",
+  "auth.rememberMe": "Remember me",
+  "auth.signInCta": "Sign in",
+  "auth.signUpCta": "Create account",
+  "auth.switchToSignUp": "Don't have an account? Sign up",
+  "auth.switchToSignIn": "Already have an account? Sign in",
+  "auth.loading": "Please wait…",
+  "auth.signedIn": "Signed in",
+  "auth.accountCreated": "Account created",
+  "auth.errorMissingFields": "Enter your email and password",
+  "auth.errorPasswordTooShort": "Password must be at least 6 characters",
+
   "common.comingSoon": "Coming soon",
   "common.error": "Something went wrong",
 } as const;

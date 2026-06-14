@@ -26,6 +26,23 @@ export const fr: Dictionary = {
   "obligation.cancelSubscription": "Annuler l'abonnement",
   "obligation.autoPaid": "Auto-payé",
 
+  "auth.signInTab": "Connexion",
+  "auth.signUpTab": "Inscription",
+  "auth.email": "Courriel",
+  "auth.password": "Mot de passe",
+  "auth.emailPlaceholder": "vous@exemple.com",
+  "auth.passwordPlaceholder": "••••••••",
+  "auth.rememberMe": "Se souvenir de moi",
+  "auth.signInCta": "Se connecter",
+  "auth.signUpCta": "Créer un compte",
+  "auth.switchToSignUp": "Pas encore de compte ? Inscrivez-vous",
+  "auth.switchToSignIn": "Vous avez déjà un compte ? Connectez-vous",
+  "auth.loading": "Veuillez patienter…",
+  "auth.signedIn": "Connecté",
+  "auth.accountCreated": "Compte créé",
+  "auth.errorMissingFields": "Saisissez votre courriel et votre mot de passe",
+  "auth.errorPasswordTooShort": "Le mot de passe doit comporter au moins 6 caractères",
+
   "common.comingSoon": "Bientôt disponible",
   "common.error": "Une erreur s'est produite",
 };

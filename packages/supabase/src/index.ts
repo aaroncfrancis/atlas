@@ -12,3 +12,4 @@ export {
   useSnoozeObligation,
   useDismissObligation,
 } from "./hooks/use-actions";
+export { useSignIn, useSignUp, enforceRememberMe } from "./hooks/use-auth";
