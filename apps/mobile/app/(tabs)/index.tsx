@@ -5,6 +5,7 @@ import { bucketObligations, weeklyProgress, type Obligation } from "@atlas/core"
 import { useObligations } from "@atlas/supabase";
 import { ObligationRow } from "@atlas/ui";
 import { useTranslation } from "@atlas/i18n";
+import { AddObligationFab } from "../../components/add-obligation-fab";
 
 interface Section {
   key: string;
@@ -44,7 +45,7 @@ export default function Home() {
         </Text>
       </View>
 
-      <ScrollView className="flex-1" contentContainerClassName="pb-8">
+      <ScrollView className="flex-1" contentContainerClassName="pb-28">
         {isEmpty ? (
           <Text className="px-4 py-12 text-center font-body text-muted">
             {t("home.empty")}
@@ -57,17 +58,21 @@ export default function Home() {
               <Text className="px-4 py-2 font-body text-xs uppercase tracking-wide text-secondary">
                 {section.title}
               </Text>
-              {section.items.map((obligation) => (
-                <ObligationRow
-                  key={obligation.id}
-                  obligation={obligation}
-                  onPress={openObligation}
-                />
-              ))}
+              <View className="gap-2 px-4">
+                {section.items.map((obligation) => (
+                  <ObligationRow
+                    key={obligation.id}
+                    obligation={obligation}
+                    onPress={openObligation}
+                  />
+                ))}
+              </View>
             </View>
           ) : null,
         )}
       </ScrollView>
+
+      <AddObligationFab />
     </SafeAreaView>
   );
 }

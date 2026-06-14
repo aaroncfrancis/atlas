@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@atlas/config": "workspace:*",
     "@atlas/core": "workspace:*",
     "@atlas/i18n": "workspace:*",
     "@supabase/supabase-js": "^2.45.0",
@@ -21,7 +22,6 @@
     "react-native": "*"
   },
   "devDependencies": {
-    "@atlas/config": "workspace:*",
     "@types/react": "^19.0.0",
     "expo-secure-store": "~56.0.4"
   }

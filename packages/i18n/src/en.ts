@@ -47,4 +47,136 @@ export const en = {
 
   "common.comingSoon": "Coming soon",
   "common.error": "Something went wrong",
+  "common.undo": "Undo",
+  "common.cancel": "Cancel",
+  "common.save": "Save",
+  "common.all": "All",
+
+  // Toast feedback (the toast-wrapped action layer, CLAUDE.md §12)
+  "toast.markedDone": "Marked done",
+  "toast.snoozed": "Snoozed",
+  "toast.dismissed": "Dismissed",
+  "toast.automated": "Automated",
+  "toast.subCancelled": "Subscription cancelled",
+  "toast.saved": "Obligation saved",
+  "toast.updated": "Obligation updated",
+  "toast.added": "Obligation added",
+
+  // Relative due-date labels (mapped from @atlas/core DueLabel)
+  "due.overdue": "Overdue by {n} days",
+  "due.overdueOne": "Overdue by 1 day",
+  "due.today": "Due today",
+  "due.tomorrow": "Due tomorrow",
+  "due.inDays": "In {n} days",
+  "due.noDate": "No date",
+  "due.snoozedUntil": "Snoozed until {date}",
+
+  // Calendar
+  "cal.title": "Calendar",
+  "cal.subtitle": "Everything on your radar.",
+  "cal.week": "Week",
+  "cal.month": "Month",
+  "cal.today": "Today",
+  "cal.sumItems": "obligations",
+  "cal.sumDue": "due",
+  "cal.sumAttention": "need attention",
+  "cal.snoozeTomorrow": "Tomorrow",
+  "cal.snoozeNextWeek": "Next week",
+  "cal.snoozeInMonth": "In a month",
+
+  // Budget
+  "bud.title": "Budget",
+  "bud.subtitle": "Planned vs. paid this period.",
+  "bud.planned": "Planned",
+  "bud.paid": "Paid",
+  "bud.committed": "Committed",
+  "bud.byEntity": "By entity",
+  "bud.spendTrend": "Spend trend",
+  "bud.6mo": "6m",
+  "bud.12mo": "12m",
+  "bud.noSpend": "No spending in this period.",
+  "bud.total": "Total",
+  "bud.periodMonth": "Month",
+  "bud.periodWeek": "Week",
+  "bud.avgMonth": "{amount}/mo avg",
+
+  // History
+  "hist.title": "History",
+  "hist.subtitle": "Everything you've cleared.",
+  "hist.searchPlaceholder": "Search history",
+  "hist.allEntities": "All entities",
+  "hist.paidOn": "Resolved {date}",
+  "hist.statusPaid": "Paid",
+  "hist.statusAutomated": "Automated",
+  "hist.statusDismissed": "Dismissed",
+  "hist.empty": "Nothing here yet.",
+
+  // Entities list + detail
+  "entity.title": "Your life map",
+  "entity.subtitle": "Everything you keep in orbit.",
+  "entity.add": "Add",
+  "entity.openObligations": "Open obligations",
+  "entity.documents": "Documents",
+  "entity.noObligations": "Nothing open here.",
+  "entity.openCount": "{n} open",
+  "entity.notFound": "Entity not found.",
+
+  // Obligation detail
+  "obd.back": "Back",
+  "obd.type": "Type",
+  "obd.due": "Due",
+  "obd.amount": "Amount",
+  "obd.status": "Status",
+  "obd.activity": "Activity",
+  "obd.receipts": "Receipts",
+  "obd.created": "Created {date}",
+  "obd.automated": "Automated",
+  "obd.markDone": "Mark done",
+  "obd.notFound": "Obligation not found.",
+
+  // Obligation form (add / edit)
+  "form.title": "New obligation",
+  "form.editTitle": "Edit obligation",
+  "form.fTitle": "Title",
+  "form.entity": "Entity",
+  "form.noEntity": "No entity",
+  "form.type": "Type",
+  "form.amount": "Amount",
+  "form.currency": "Currency",
+  "form.dueDate": "Due date",
+  "form.subSection": "Subscription",
+  "form.recurrence": "Recurrence",
+  "form.autoPaid": "Auto-paid",
+  "form.payingAccount": "Paying account",
+  "form.payingPlaceholder": "Visa •4242",
+  "form.description": "Notes",
+
+  // Obligation type labels
+  "type.bill": "Bill",
+  "type.renewal": "Renewal",
+  "type.appointment": "Appointment",
+  "type.deadline": "Deadline",
+  "type.task": "Task",
+
+  // Recurrence labels
+  "rec.none": "One-time",
+  "rec.weekly": "Weekly",
+  "rec.biweekly": "Bi-weekly",
+  "rec.monthly": "Monthly",
+  "rec.quarterly": "Quarterly",
+  "rec.yearly": "Annual",
+
+  // Status labels
+  "status.open": "Open",
+  "status.done": "Done",
+  "status.snoozed": "Snoozed",
+  "status.dismissed": "Dismissed",
+  "status.automated": "Automated",
+
+  // Activity-timeline event labels
+  "event.created": "Created",
+  "event.resolved": "Resolved",
+  "event.snoozed": "Snoozed",
+  "event.automated": "Automated",
+  "event.dismissed": "Dismissed",
 } as const;

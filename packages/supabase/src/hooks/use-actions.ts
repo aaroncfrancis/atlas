@@ -1,120 +1,83 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { advanceDate, type Obligation } from "@atlas/core";
+import type { Obligation } from "@atlas/core";
 import { useTranslation } from "@atlas/i18n";
-import { supabase } from "../client";
-import { toast } from "../toast";
-import { obligationsQueryKey } from "./use-obligations";
+import { toast, type ToastAction } from "../toast";
+import {
+  useAutomate,
+  useCancelSubscription,
+  useDismissObligation,
+  useResolveObligation,
+  useSnoozeObligation,
+  useUpdateObligation,
+} from "./use-mutations";
 
-// Toast-wrapped action layer (CLAUDE.md §12). Mutations live here, each paired
-// with localized success/error feedback, so screens just call the hook.
-//
-// NOTE (CLAUDE.md §6/§8 open decision): recurrence advancement + event logging
-// run app-side here today, mirroring the reference build. The pure helpers are
-// in @atlas/core so the same logic could later be promoted to DB triggers.
-
-function errorMessage(error: unknown, fallback: string): string {
-  return error instanceof Error ? error.message : fallback;
+// Toast-wrapped action layer (CLAUDE.md §12). Screens call these instead of the
+// raw mutations: each fires localized success feedback and (where reversible) an
+// Undo that restores the obligation's prior state. Errors are surfaced by the
+// underlying mutations.
+export interface ObligationActions {
+  onDone: (obligation: Obligation) => void;
+  onSnooze: (obligation: Obligation, until: string) => void;
+  onDismiss: (obligation: Obligation) => void;
+  onAutomate: (obligation: Obligation) => void;
+  onCancelSub: (obligation: Obligation) => void;
 }
 
-/** Mark an obligation done; spawn the next occurrence if it recurs. */
-export function useResolveObligation() {
-  const queryClient = useQueryClient();
+export function useObligationActions(): ObligationActions {
   const { t } = useTranslation();
+  const resolve = useResolveObligation();
+  const snooze = useSnoozeObligation();
+  const dismiss = useDismissObligation();
+  const automate = useAutomate();
+  const cancelSub = useCancelSubscription();
+  const update = useUpdateObligation();
 
-  return useMutation({
-    mutationFn: async (obligation: Obligation): Promise<void> => {
-      const nowIso = new Date().toISOString();
+  // Restore the fields a resolve/snooze/dismiss/cancel could have changed. Like
+  // the reference, undo doesn't delete a spawned recurrence — it reverts state.
+  function undo(o: Obligation): ToastAction {
+    return {
+      label: t("common.undo"),
+      onPress: () =>
+        update.mutate({
+          id: o.id,
+          patch: {
+            status: o.status,
+            resolved_at: o.resolved_at,
+            resolved_method: o.resolved_method,
+            snoozed_until: o.snoozed_until,
+            recurrence: o.recurrence,
+            auto_paid: o.auto_paid,
+          },
+        }),
+    };
+  }
 
-      const { error } = await supabase
-        .from("obligations")
-        .update({ status: "done", resolved_at: nowIso, resolved_method: "paid" })
-        .eq("id", obligation.id);
-      if (error) throw error;
-
-      await supabase.from("obligation_events").insert({
-        user_id: obligation.user_id,
-        obligation_id: obligation.id,
-        action: "resolved",
-        amount: obligation.amount,
-        occurred_at: nowIso,
-      });
-
-      if (obligation.recurrence !== "none" && obligation.due_date !== null) {
-        await supabase.from("obligations").insert({
-          user_id: obligation.user_id,
-          entity_id: obligation.entity_id,
-          title: obligation.title,
-          description: obligation.description,
-          type: obligation.type,
-          amount: obligation.amount,
-          currency: obligation.currency,
-          due_date: advanceDate(obligation.due_date, obligation.recurrence),
-          status: "open",
-          priority: obligation.priority,
-          source: "recurrence",
-          vendor: obligation.vendor,
-          recurrence: obligation.recurrence,
-          auto_paid: obligation.auto_paid,
-          paying_account: obligation.paying_account,
-        });
-      }
-    },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: obligationsQueryKey });
-      toast.success(t("obligation.done"));
-    },
-    onError: (error) => toast.error(errorMessage(error, t("common.error"))),
-  });
-}
-
-/** Snooze an obligation until a future date. */
-export function useSnoozeObligation() {
-  const queryClient = useQueryClient();
-  const { t } = useTranslation();
-
-  return useMutation({
-    mutationFn: async ({
-      obligation,
-      until,
-    }: {
-      obligation: Obligation;
-      until: string;
-    }): Promise<void> => {
-      const { error } = await supabase
-        .from("obligations")
-        .update({ status: "snoozed", snoozed_until: until })
-        .eq("id", obligation.id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: obligationsQueryKey });
-      toast.success(t("obligation.snooze"));
-    },
-    onError: (error) => toast.error(errorMessage(error, t("common.error"))),
-  });
-}
-
-/** Dismiss an obligation (no recurrence). */
-export function useDismissObligation() {
-  const queryClient = useQueryClient();
-  const { t } = useTranslation();
-
-  return useMutation({
-    mutationFn: async (obligation: Obligation): Promise<void> => {
-      const { error } = await supabase
-        .from("obligations")
-        .update({
-          status: "dismissed",
-          resolved_at: new Date().toISOString(),
-          resolved_method: "dismissed",
-        })
-        .eq("id", obligation.id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: obligationsQueryKey });
-      toast.success(t("obligation.dismiss"));
-    },
-    onError: (error) => toast.error(errorMessage(error, t("common.error"))),
-  });
+  return {
+    onDone: (o) =>
+      resolve.mutate(o, {
+        onSuccess: () =>
+          toast.success(t("toast.markedDone"), { description: o.title, action: undo(o) }),
+      }),
+    onSnooze: (o, until) =>
+      snooze.mutate(
+        { obligation: o, until },
+        {
+          onSuccess: () =>
+            toast.success(t("toast.snoozed"), { description: o.title, action: undo(o) }),
+        },
+      ),
+    onDismiss: (o) =>
+      dismiss.mutate(o, {
+        onSuccess: () =>
+          toast.success(t("toast.dismissed"), { description: o.title, action: undo(o) }),
+      }),
+    onAutomate: (o) =>
+      automate.mutate(o, {
+        onSuccess: () => toast.success(t("toast.automated"), { description: o.title }),
+      }),
+    onCancelSub: (o) =>
+      cancelSub.mutate(o, {
+        onSuccess: () =>
+          toast.success(t("toast.subCancelled"), { description: o.title, action: undo(o) }),
+      }),
+  };
 }

@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
     // CRITICAL (monorepo): without this glob, classNames used inside @atlas/ui
     // components compile to no styles.
     "../../packages/ui/src/**/*.{js,jsx,ts,tsx}",

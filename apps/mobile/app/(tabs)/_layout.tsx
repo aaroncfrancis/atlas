@@ -2,9 +2,13 @@ import { Tabs } from "expo-router";
 import { Boxes, Calendar, House, Settings, Wallet } from "lucide-react-native";
 import { useTranslation } from "@atlas/i18n";
 import { colorTokens } from "@atlas/config";
+import { useAutoPaidRollover, useObligations } from "@atlas/supabase";
 
 export default function TabsLayout() {
   const { t } = useTranslation();
+  // Auto-paid rollover runs in the authenticated shell (CLAUDE.md §8 AppShell).
+  const { data: obligations = [] } = useObligations();
+  useAutoPaidRollover(obligations);
 
   return (
     <Tabs

@@ -173,6 +173,9 @@ importers:
 
   packages/supabase:
     dependencies:
+      '@atlas/config':
+        specifier: workspace:*
+        version: link:../config
       '@atlas/core':
         specifier: workspace:*
         version: link:../core
@@ -186,9 +189,6 @@ importers:
         specifier: ^5.50.0
         version: 5.101.0(react@19.2.3)
     devDependencies:
-      '@atlas/config':
-        specifier: workspace:*
-        version: link:../config
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.17

@@ -13,7 +13,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { getLocales } from "expo-localization";
 import type { Session } from "@supabase/supabase-js";
 import { I18nProvider, resolveLocale } from "@atlas/i18n";
-import { supabase, enforceRememberMe } from "@atlas/supabase";
+import { supabase, enforceRememberMe, Toaster } from "@atlas/supabase";
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -109,6 +109,8 @@ function RootNavigator({ fontsLoaded }: { fontsLoaded: boolean }) {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="obligations/[id]" options={{ presentation: "modal" }} />
       </Stack>
+      {/* App-wide toast presenter, above the navigator so it shows over modals. */}
+      <Toaster />
     </>
   );
 }

@@ -1,4 +1,15 @@
-import type { Entity, Obligation } from "./types";
+import type { Entity, Obligation, Recurrence } from "./types";
+
+/**
+ * Recurrence options offered in the subscription form section (CLAUDE.md §8).
+ * Excludes `none` and `quarterly` to match the Lovable reference.
+ */
+export const SUBSCRIPTION_RECURRENCES: Recurrence[] = [
+  "weekly",
+  "biweekly",
+  "monthly",
+  "yearly",
+];
 
 /**
  * An obligation behaves like a subscription when it's a renewal or hangs off a
