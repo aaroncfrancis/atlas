@@ -21,6 +21,7 @@ import { useTranslation } from "@atlas/i18n";
 import { colorTokens } from "@atlas/config";
 import { Badge } from "./badge";
 import { DuePill } from "./due-pill";
+import { EntityIcon } from "./entity-icon";
 import { Button } from "./primitives";
 import { SnoozePopover } from "./snooze-popover";
 import { localeTag, recurrenceLabel, typeLabel } from "./lib/labels";
@@ -50,6 +51,13 @@ export interface ObligationRowProps {
   onViewEntity?: (entityId: string) => void;
   /** Start expanded (used by the calendar/history inline dialog). */
   defaultExpanded?: boolean;
+  /**
+   * Controlled expansion. When `onToggle` is provided the row is parent-controlled
+   * (the home feed lifts this to a single `expandedId` so only one row opens at a
+   * time); otherwise the row owns its own expand state.
+   */
+  expanded?: boolean;
+  onToggle?: () => void;
 }
 
 function NeutralBadge({ label }: { label: string }) {
@@ -74,10 +82,14 @@ export function ObligationRow({
   onEdit,
   onViewEntity,
   defaultExpanded = false,
+  expanded,
+  onToggle,
 }: ObligationRowProps) {
   const { t, locale } = useTranslation();
   const expandable = actions !== undefined;
-  const [expanded, setExpanded] = useState(defaultExpanded);
+  const controlled = onToggle !== undefined;
+  const [internalExpanded, setInternalExpanded] = useState(defaultExpanded);
+  const isOpen = controlled ? expanded === true : internalExpanded;
 
   const autoPaid = isAutoPaid(obligation);
   const amount = formatAmount(obligation.amount, obligation.currency, localeTag(locale));
@@ -86,13 +98,14 @@ export function ObligationRow({
 
   function handlePress() {
     if (expandable) {
-      setExpanded((value) => !value);
+      if (controlled) onToggle?.();
+      else setInternalExpanded((value) => !value);
     } else {
       onPress?.(obligation);
     }
   }
 
-  const Chevron = expandable && expanded ? ChevronUp : ChevronDown;
+  const Chevron = expandable && isOpen ? ChevronUp : ChevronDown;
 
   return (
     <View className="overflow-hidden rounded-2xl border border-border bg-card">
@@ -102,16 +115,11 @@ export function ObligationRow({
         accessibilityLabel={obligation.title}
         className="flex-row items-center gap-3 px-4 py-3"
       >
-        <View className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: dot }} />
+        <EntityIcon icon={entity?.icon} type={entity?.type} color={dot} size={18} />
         <View className="flex-1">
           <Text className="font-display text-sm text-foreground" numberOfLines={1}>
             {obligation.title}
           </Text>
-          {obligation.vendor !== null ? (
-            <Text className="font-body text-xs text-muted" numberOfLines={1}>
-              {obligation.vendor}
-            </Text>
-          ) : null}
         </View>
 
         <View className="items-end gap-1">
@@ -127,7 +135,7 @@ export function ObligationRow({
         <Chevron size={18} color={colorTokens.textMuted} />
       </Pressable>
 
-      {expandable && expanded ? (
+      {expandable && isOpen ? (
         <View className="gap-3 border-t border-border px-4 pb-4 pt-3">
           <View className="flex-row flex-wrap gap-2">
             <NeutralBadge label={typeLabel(t, obligation.type)} />

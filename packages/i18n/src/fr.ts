@@ -142,7 +142,7 @@ export const fr: Dictionary = {
   "form.editTitle": "Modifier l'obligation",
   "form.fTitle": "Titre",
   "form.entity": "Élément",
-  "form.noEntity": "Aucun élément",
+  "form.noEntity": "Général",
   "form.type": "Type",
   "form.amount": "Montant",
   "form.currency": "Devise",

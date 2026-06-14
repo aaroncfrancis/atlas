@@ -139,7 +139,7 @@ export const en = {
   "form.editTitle": "Edit obligation",
   "form.fTitle": "Title",
   "form.entity": "Entity",
-  "form.noEntity": "No entity",
+  "form.noEntity": "General",
   "form.type": "Type",
   "form.amount": "Amount",
   "form.currency": "Currency",
