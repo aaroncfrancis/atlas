@@ -31,11 +31,15 @@ function interpolate(template: string, params?: TranslateParams): string {
 
 export interface I18nProviderProps {
   children: ReactNode;
-  /** Defaults to "fr" to match `profiles.language` (CLAUDE.md §6). */
+  /**
+   * Initial UI locale. The app derives this from the device locale via
+   * `resolveLocale` (CLAUDE.md §9 EN/FR parity). Falls back to "en" when no value
+   * is provided; manual override stays available through `setLocale`.
+   */
   initialLocale?: Locale;
 }
 
-export function I18nProvider({ children, initialLocale = "fr" }: I18nProviderProps) {
+export function I18nProvider({ children, initialLocale = "en" }: I18nProviderProps) {
   const [locale, setLocale] = useState<Locale>(initialLocale);
 
   const value = useMemo<I18nContextValue>(

@@ -43,6 +43,11 @@ export const fr: Dictionary = {
   "auth.errorMissingFields": "Saisissez votre courriel et votre mot de passe",
   "auth.errorPasswordTooShort": "Le mot de passe doit comporter au moins 6 caractères",
 
+  "settings.language": "Langue",
+  // Endonyms — each language shown in its own name, identical across dictionaries.
+  "settings.languageEnglish": "English",
+  "settings.languageFrench": "Français",
+
   "common.comingSoon": "Bientôt disponible",
   "common.error": "Une erreur s'est produite",
 };

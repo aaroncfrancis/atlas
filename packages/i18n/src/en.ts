@@ -41,6 +41,10 @@ export const en = {
   "auth.errorMissingFields": "Enter your email and password",
   "auth.errorPasswordTooShort": "Password must be at least 6 characters",
 
+  "settings.language": "Language",
+  "settings.languageEnglish": "English",
+  "settings.languageFrench": "Français",
+
   "common.comingSoon": "Coming soon",
   "common.error": "Something went wrong",
 } as const;

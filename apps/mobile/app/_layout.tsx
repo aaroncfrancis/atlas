@@ -10,13 +10,18 @@ import { Archivo_400Regular } from "@expo-google-fonts/archivo";
 import { HankenGrotesk_400Regular } from "@expo-google-fonts/hanken-grotesk";
 import { JetBrainsMono_400Regular } from "@expo-google-fonts/jetbrains-mono";
 import * as SplashScreen from "expo-splash-screen";
+import { getLocales } from "expo-localization";
 import type { Session } from "@supabase/supabase-js";
-import { I18nProvider } from "@atlas/i18n";
+import { I18nProvider, resolveLocale } from "@atlas/i18n";
 import { supabase, enforceRememberMe } from "@atlas/supabase";
 
 void SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
+
+// Default the UI to the device language (French if the device locale is French,
+// English otherwise). Manual override stays available in Settings via setLocale.
+const initialLocale = resolveLocale(getLocales()[0]?.languageCode);
 
 /**
  * Auth gate (CLAUDE.md §11.3): redirect signed-out users to /auth and signed-in
@@ -76,9 +81,9 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        {/* Default locale "fr" per profiles.language (CLAUDE.md §6); later hydrate
-            from the signed-in user's profile. */}
-        <I18nProvider initialLocale="fr">
+        {/* Default locale follows the device language (resolveLocale); later
+            hydrate from the signed-in user's profile.language preference. */}
+        <I18nProvider initialLocale={initialLocale}>
           <RootNavigator fontsLoaded={fontsLoaded} />
         </I18nProvider>
       </QueryClientProvider>
